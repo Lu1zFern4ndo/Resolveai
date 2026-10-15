@@ -1,0 +1,54 @@
+import 'package:flutter/foundation.dart';
+import '../core/models/chamado.dart';
+import '../core/models/proposta.dart';
+
+class ChamadoProvider extends ChangeNotifier {
+  final List<Chamado> _chamados = [];
+  final List<Proposta> _propostas = [];
+
+  List<Chamado> get chamados => List.unmodifiable(_chamados);
+
+  List<Proposta> propostasDo(String chamadoId) =>
+      _propostas.where((p) => p.chamadoId == chamadoId).toList();
+
+  void criarChamado(Chamado chamado) {
+    _chamados.insert(0, chamado);
+    notifyListeners();
+  }
+
+  void adicionarProposta(Proposta proposta) {
+    _propostas.add(proposta);
+    _atualizarStatus(proposta.chamadoId, StatusChamado.comProposta);
+    notifyListeners();
+  }
+
+  void aceitarProposta(String propostaId) {
+    final i = _propostas.indexWhere((p) => p.id == propostaId);
+    if (i == -1) return;
+
+    final aceita = _propostas[i];
+    for (var j = 0; j < _propostas.length; j++) {
+      final p = _propostas[j];
+      if (p.chamadoId != aceita.chamadoId) continue;
+      _propostas[j] = Proposta(
+        id: p.id,
+        chamadoId: p.chamadoId,
+        prestadorId: p.prestadorId,
+        prestadorNome: p.prestadorNome,
+        valor: p.valor,
+        mensagem: p.mensagem,
+        criadaEm: p.criadaEm,
+        status: p.id == propostaId
+            ? StatusProposta.aceita
+            : StatusProposta.recusada,
+      );
+    }
+    _atualizarStatus(aceita.chamadoId, StatusChamado.aceito);
+    notifyListeners();
+  }
+
+  void _atualizarStatus(String chamadoId, StatusChamado status) {
+    final i = _chamados.indexWhere((c) => c.id == chamadoId);
+    if (i != -1) _chamados[i] = _chamados[i].copyWith(status: status);
+  }
+}
