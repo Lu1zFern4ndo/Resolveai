@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 import 'core/utils/mock_data.dart';
 import 'providers/chamado_provider.dart';
 import 'providers/location_provider.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'ui/widgets/mapa_prestadores.dart';
 
 void main() {
   runApp(
@@ -74,6 +76,13 @@ class TelaTeste extends StatelessWidget {
                   child: const Text('Atualizar localização'),
                 ),
               ],
+            ),
+          ),
+          SizedBox(
+            height: 250,
+            child: MapaPrestadores(
+              centro: LatLng(loc.lat, loc.lng),
+              prestadores: proximos,
             ),
           ),
           Expanded(
