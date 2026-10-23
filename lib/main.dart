@@ -5,6 +5,8 @@ import 'providers/chamado_provider.dart';
 import 'providers/location_provider.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'ui/widgets/mapa_prestadores.dart';
+import 'providers/foto_provider.dart';
+import 'ui/screens/tela_teste_camera.dart';
 
 void main() {
   runApp(
@@ -12,6 +14,7 @@ void main() {
       providers: [
         ChangeNotifierProvider(create: (_) => LocationProvider()..atualizar()),
         ChangeNotifierProvider(create: (_) => ChamadoProvider()),
+        ChangeNotifierProvider(create: (_) => FotoProvider()),
       ],
       child: const MyApp(),
     ),
@@ -45,7 +48,18 @@ class TelaTeste extends StatelessWidget {
     final proximos = loc.prestadoresProximos(prestadoresMock, raioKm: 10);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('ResolveAí - Teste')),
+        appBar: AppBar(
+          title: const Text('ResolveAí - Teste'),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.camera_alt),
+              onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const TelaTesteCamera()),
+              ),
+            ),
+          ],
+        ),
       body: loc.carregando
           ? const Center(child: CircularProgressIndicator())
           : Column(
