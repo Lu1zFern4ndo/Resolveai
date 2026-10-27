@@ -8,6 +8,7 @@ import 'ui/widgets/mapa_prestadores.dart';
 import 'providers/foto_provider.dart';
 import 'ui/screens/tela_teste_camera.dart';
 import 'core/services/notification_service.dart';
+import 'ui/screens/tela_teste_notificacao.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -60,6 +61,14 @@ class TelaTeste extends StatelessWidget {
               onPressed: () => Navigator.push(
                 context,
                 MaterialPageRoute(builder: (_) => const TelaTesteCamera()),
+              ),
+            ),
+            IconButton(
+              icon: const Icon(Icons.notifications),
+              onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (_) => const TelaTesteNotificacao()),
               ),
             ),
           ],

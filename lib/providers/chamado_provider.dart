@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import '../core/models/chamado.dart';
 import '../core/models/proposta.dart';
+import '../core/services/notification_service.dart';
 
 class ChamadoProvider extends ChangeNotifier {
   final List<Chamado> _chamados = [];
@@ -20,6 +21,12 @@ class ChamadoProvider extends ChangeNotifier {
     _propostas.add(proposta);
     _atualizarStatus(proposta.chamadoId, StatusChamado.comProposta);
     notifyListeners();
+
+    final valor = proposta.valor.toStringAsFixed(2).replaceAll('.', ',');
+    NotificationService.instance.mostrar(
+      'Nova proposta recebida',
+      '${proposta.prestadorNome} enviou um orçamento de R\$ $valor',
+    );
   }
 
   void aceitarProposta(String propostaId) {
