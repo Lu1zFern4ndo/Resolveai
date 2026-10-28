@@ -9,6 +9,7 @@ import 'providers/foto_provider.dart';
 import 'ui/screens/tela_teste_camera.dart';
 import 'core/services/notification_service.dart';
 import 'ui/screens/tela_teste_notificacao.dart';
+import 'providers/auth_provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,6 +18,7 @@ Future<void> main() async {
   runApp(
     MultiProvider(
       providers: [
+        ChangeNotifierProvider(create: (_) => AuthProvider()),
         ChangeNotifierProvider(create: (_) => LocationProvider()..atualizar()),
         ChangeNotifierProvider(create: (_) => ChamadoProvider()),
         ChangeNotifierProvider(create: (_) => FotoProvider()),

@@ -8,6 +8,11 @@ class ChamadoProvider extends ChangeNotifier {
   final List<Proposta> _propostas = [];
 
   List<Chamado> get chamados => List.unmodifiable(_chamados);
+  List<Chamado> get chamadosAbertos => _chamados
+      .where((c) =>
+  c.status == StatusChamado.aberto ||
+      c.status == StatusChamado.comProposta)
+      .toList();
 
   List<Proposta> propostasDo(String chamadoId) =>
       _propostas.where((p) => p.chamadoId == chamadoId).toList();
