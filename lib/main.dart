@@ -11,6 +11,7 @@ import 'core/services/notification_service.dart';
 import 'ui/screens/tela_teste_notificacao.dart';
 import 'providers/auth_provider.dart';
 
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await NotificationService.instance.init();
@@ -58,6 +59,7 @@ class TelaTeste extends StatelessWidget {
         appBar: AppBar(
           title: const Text('ResolveAí - Teste'),
           actions: [
+
             IconButton(
               icon: const Icon(Icons.camera_alt),
               onPressed: () => Navigator.push(
